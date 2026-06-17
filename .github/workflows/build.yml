@@ -1,9 +1,14 @@
 name: Build
 
+# Runs on every pull request, so all code is built, tested, and linted before merge.
 on:
-  push:
-    branches: [main]
   pull_request:
+
+# Cancel an in-progress run when the same ref is pushed again, to avoid piling
+# up redundant builds.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
