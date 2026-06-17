@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.github.jamieramsell</groupId>
+  <artifactId>sudoku-cli</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Sudoku CLI</name>
+  <description>
+    Provides a command-line interface for the Sudoku engine; the view and
+    controller layers of an MVC stack.
+  </description>
+  <url>https://github.com/jamieramsell/sudoku-cli</url>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://github.com/jamieramsell/sudoku-cli/blob/main/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Jamie Ramsell</name>
+      <url>https://github.com/jamieramsell</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/jamieramsell/sudoku-cli.git</connection>
+    <developerConnection>scm:git:https://github.com/jamieramsell/sudoku-cli.git</developerConnection>
+    <url>https://github.com/jamieramsell/sudoku-cli</url>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <checkstyle.version>10.17.0</checkstyle.version>
+  </properties>
+
+  <!-- The Sudoku engine is consumed via JitPack, which builds it on demand from the
+       public GitHub repo. No authentication is required. -->
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <name>JitPack</name>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- The Sudoku engine (model layer) this CLI is a view/controller for.
+         JitPack coordinates: com.github.<user>:<repo>:<git-tag>. -->
+    <dependency>
+      <groupId>com.github.jamieramsell</groupId>
+      <artifactId>sudoku</artifactId>
+      <version>v1.0.2</version>
+    </dependency>
+
+    <!-- JUnit 4 pulls in hamcrest-core 1.3 transitively. -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+
+      <!-- Enforce the Google Java Style Guide during `verify`. The google_checks.xml
+           config ships inside the Checkstyle jar, so no local config file is needed.
+           Google's checks are emitted at severity "warning", so violationSeverity is
+           lowered to warning to make any style violation fail the build. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.4.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <failOnViolation>true</failOnViolation>
+          <violationSeverity>warning</violationSeverity>
+        </configuration>
+        <executions>
+          <execution>
+            <id>checkstyle-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
