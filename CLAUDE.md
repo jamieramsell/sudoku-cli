@@ -54,3 +54,23 @@ java -cp target/classes sudoku.cli.Main
 - Follow the **Google Java Style Guide** (2-space indent, 100-char lines, `{}` on all blocks, ordered imports). This is enforced during `verify` via the bundled `google_checks.xml` and the Checkstyle plugin — note this differs from the engine repo, which uses a custom snake_case convention.
 - Prefer package-private visibility where public access isn't required.
 - Javadoc on all public methods. Inline comments used to explain non-obvious logic blocks.
+- Interfaces are prefixed with `I` (e.g. `ISudokuController`); controllers/services follow PascalCase.
+
+## Workflow & Conventions
+
+A milestone-based branching model. The flow is:
+
+```
+<milestone>/<label>/<name>  ──PR──▶  stable-<milestone>  ──PR──▶  main
+```
+
+- **Branch naming**: `<milestone>/<label>/<name>`.
+  - `<label>` is a Conventional Commit type (`feat`, `fix`, `refactor`, `docs`, `chore`, …).
+  - Version milestones replace dots with hyphens: `v1.0.0` → `v1-0-0`.
+  - Examples: `m1/feat/icontroller`, `v1-0-0/refactor/consoleview`.
+- **Never commit directly to `main` or a `stable-*` branch.** Always branch and open a pull request.
+  - Development branches are merged into their milestone's stable branch (`stable-<milestone>`, e.g. `stable-m1`) via PR.
+  - A completed milestone's stable branch is merged into `main` via a further PR.
+- **Commits**: Conventional Commits. Breaking changes are flagged with `!` (e.g. `feat!:`, `fix!:`), and a breaking change requires a tracking issue to be opened first.
+- **Pull requests**: open an issue before starting work; every PR must pass the automated checks (build, test, lint) before it can be merged.
+- **Versioning**: Semantic Versioning.

@@ -93,6 +93,45 @@ Code is checked against the [Google Java Style Guide](https://google.github.io/s
 
 ---
 
+## Contributing
+
+This project uses a milestone-based branching model. Work flows from short-lived
+development branches up through per-milestone stable branches into `main`:
+
+```
+<milestone>/<label>/<name>  ──PR──▶  stable-<milestone>  ──PR──▶  main
+```
+
+### Branching
+
+- **Development branches** — `<milestone>/<label>/<name>`, where `<label>` is a
+  Conventional Commit type (`feat`, `fix`, `refactor`, `docs`, `chore`, …). Version
+  milestones replace dots with hyphens (`v1.0.0` → `v1-0-0`).
+  - `m1/feat/icontroller` — defining the `ISudokuController` interface in milestone M1
+  - `v1-0-0/refactor/consoleview` — refactoring the console view in milestone v1.0.0
+- **Stable branches** — `stable-<milestone>` (e.g. `stable-m1`, `stable-v1-0-0`).
+  Development branches are merged here via pull request once ready.
+- **`main`** — a completed milestone is merged from its stable branch into `main`
+  via a further pull request.
+
+### Pull requests
+
+1. Open an issue describing the change before starting work.
+2. Branch from the relevant stable branch using the naming convention above.
+3. Open a pull request targeting the appropriate branch (development → `stable-<milestone>`;
+   completed milestone → `main`).
+4. Every pull request must pass the automated checks (build, test, lint) before it can be merged.
+
+### Commits & versioning
+
+- **[Conventional Commits](https://www.conventionalcommits.org/)** (`feat:`, `fix:`,
+  `refactor:`, `chore:`, `docs:`, …).
+- **Breaking changes** are flagged with `!` (e.g. `feat!:`, `fix!:`). A breaking change
+  must have a corresponding issue opened first.
+- Releases follow **[Semantic Versioning](https://semver.org/)**.
+
+---
+
 ## Related
 
 - **[`sudoku`](https://github.com/jamieramsell/sudoku)** — the Sudoku engine (model layer) this CLI is built on.
