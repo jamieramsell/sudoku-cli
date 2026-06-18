@@ -95,7 +95,9 @@ public interface IController {
   void reset() throws EmptyGridException;
 
   /**
-   * Returns the current state of the Sudoku grid
+   * Returns the current state of the Sudoku grid.
+   *
+   * @return the current state of the Sudoku grid.
    *
    * @throws IllegalStateException if the instance of {@code IController} does not have an ongoing
    * Sudoku game.
