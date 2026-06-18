@@ -185,7 +185,8 @@ public class Controller implements IController {
 
     for (int row = 0; row < gridSize; row++) {
       for (int col = 0; col < gridSize; col++) {
-        if (!isCellProtected(row, col)) {
+        // Only player-entered cells (not given/hint cells) that actually hold a value are cleared.
+        if (!isCellProtected(row, col) && grid.getValue(row, col) != -1) {
           grid.setValue(row, col, -1);
           emptiedCells++;
         }
