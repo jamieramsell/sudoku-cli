@@ -116,6 +116,55 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Two javadoc runs, because "browsable cross-links" and "strict checking of our
+           own docs" need opposite inputs:
+
+           1. check-docs (bound to `verify`): a strict gate over THIS repo's sources only.
+              No engine sources are pulled in, so the engine's own doc-lint noise can never
+              appear, and warnings are promoted to build failures (failOnWarnings). This is
+              what keeps our docs honest.
+           2. default-cli (`mvn javadoc:javadoc`): generates the browsable site. The engine
+              publishes no javadoc site on JitPack (only its main + sources jars), so there
+              is nothing to -link against; instead we pull in the engine's sources and
+              document them alongside the CLI, making @see/@link refs to sudoku.* clickable.
+              The engine's doc-lint problems are tolerated here (failOnError=false) since we
+              don't own that source and it's included only to provide link targets. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.11.2</version>
+        <configuration>
+          <!-- Shared by both runs: only ever lint this repo's own packages. -->
+          <additionalOptions>
+            <additionalOption>-Xdoclint/package:sudoku.cli,sudoku.cli.*</additionalOption>
+          </additionalOptions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>check-docs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>javadoc</goal>
+            </goals>
+            <configuration>
+              <failOnWarnings>true</failOnWarnings>
+              <!-- Throwaway output: this run is a gate, not the published site. -->
+              <reportOutputDirectory>${project.build.directory}/doc-check</reportOutputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-cli</id>
+            <configuration>
+              <includeDependencySources>true</includeDependencySources>
+              <dependencySourceIncludes>
+                <dependencySourceInclude>com.github.jamieramsell:sudoku</dependencySourceInclude>
+              </dependencySourceIncludes>
+              <failOnError>false</failOnError>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 

@@ -1,0 +1,5 @@
+sudoku
+sudoku.cli
+sudoku.cli.exceptions
+sudoku.generation
+sudoku.generation.symmetry
