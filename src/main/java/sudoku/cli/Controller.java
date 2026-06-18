@@ -52,6 +52,20 @@ public class Controller implements IController {
   public void newGame(PuzzleDifficulty difficulty) {
     this.generator = new SudokuGenerator(difficulty, new NoSymmetry(DEFAULT_SIZE));
     this.grid = generator.generatePuzzle(true);
+
+    // The cells the generator leaves filled are the puzzle's givens. Record them up front (before
+    // solving, while the grid is still the pristine puzzle) so they cannot later be overwritten or
+    // cleared by the player. Hints append to this same list.
+    this.protectedCells = new ArrayList<>();
+    int gridSize = grid.getSize();
+    for (int row = 0; row < gridSize; row++) {
+      for (int col = 0; col < gridSize; col++) {
+        if (grid.getValue(row, col) != -1) {
+          protectedCells.add(new Tuple2<>(row, col));
+        }
+      }
+    }
+
     this.solver = new SudokuSolver(grid);
 
     Optional<ISudokuGrid> solvedGridOptional =
