@@ -85,7 +85,7 @@ Code is checked against the [Google Java Style Guide](https://google.github.io/s
 ## Roadmap
 
 - [x] Maven build, Google-style linting, and engine integration via JitPack
-- [ ] `SudokuController` — new game, place/clear cell, hint, solve, reset
+- [x] `SudokuController` — new game, place/clear cell, hint, solve, reset
 - [ ] Console view — grid rendering and input loop
 - [ ] Distinguish fixed clues from player-entered cells
 - [ ] Runnable uber-jar (`maven-shade-plugin`) for `java -jar`
