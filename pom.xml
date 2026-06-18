@@ -102,6 +102,10 @@
         </dependencies>
         <configuration>
           <configLocation>google_checks.xml</configLocation>
+          <!-- Layer project-specific suppressions over google_checks.xml. The expression name is
+               the property google_checks' bundled SuppressionFilter reads for its file path. -->
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsFileExpression>org.checkstyle.google.suppressionfilter.config</suppressionsFileExpression>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <failOnViolation>true</failOnViolation>
           <violationSeverity>warning</violationSeverity>
