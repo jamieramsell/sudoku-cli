@@ -32,8 +32,8 @@ public interface IController {
    * Attempts to place a given value in the target cell.
    * 
    * <p> The value to be placed within the cell must fall within the bounds of the size of the
-   * Sudoku grid. For example, a typical grid has a size of 9, meaning the values 1-9 inclusive must
-   * be placed exactly once in each row, column, and box.
+   * {@link sudoku.ISudokuGrid}. For example, a typical grid has a size of 9, meaning the values 1-9
+   * inclusive must be placed exactly once in each row, column, and box.
    * 
    * @param row The row (or y-coordinate) of the target cell.
    * @param col The column (or x-coordinate) of the target cell.
@@ -45,7 +45,7 @@ public interface IController {
    * @throws GivenCellException if the given cell stores a given value: these cannot be
    * overwritten.
    *
-   * @see sudoku.ISudokuGrid for further details on grid size.
+   * @see sudoku.ISudokuGrid
    */
   void placeValue(int row, int col, int value) throws InvalidCellException, InvalidValueException,
       GivenCellException;
