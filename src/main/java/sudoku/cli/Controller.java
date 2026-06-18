@@ -2,25 +2,21 @@ package sudoku.cli;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Optional;
-
+import java.util.Random;
 import sudoku.ISudokuGrid;
 import sudoku.ISudokuSolver;
 import sudoku.SudokuSolver;
 import sudoku.Tuple2;
-
 import sudoku.cli.exceptions.EmptyCellException;
 import sudoku.cli.exceptions.EmptyGridException;
 import sudoku.cli.exceptions.GivenCellException;
 import sudoku.cli.exceptions.GridSolvedException;
 import sudoku.cli.exceptions.InvalidCellException;
 import sudoku.cli.exceptions.InvalidValueException;
-
 import sudoku.generation.ISudokuGenerator;
 import sudoku.generation.ISudokuGenerator.PuzzleDifficulty;
 import sudoku.generation.SudokuGenerator;
-
 import sudoku.generation.symmetry.NoSymmetry;
 
 /**
@@ -43,6 +39,11 @@ public class Controller implements IController {
 
   // Constructor Methods //
 
+  /**
+   * Constructs a controller and immediately starts a new game at the given difficulty.
+   *
+   * @param difficulty The difficulty, which determines the number of givens in the generated grid.
+   */
   public Controller(PuzzleDifficulty difficulty) {
     newGame(difficulty);
   }
@@ -57,8 +58,8 @@ public class Controller implements IController {
         solver.solveGrid()
         .stream()
         .findFirst();
-    
-    if(solvedGridOptional.isPresent()) {
+
+    if (solvedGridOptional.isPresent()) {
       this.solvedGrid = solvedGridOptional.get();
     } else {
       throw new IllegalStateException("ISudokuGenerator generated a puzzle with no solution");
@@ -186,7 +187,7 @@ public class Controller implements IController {
 
   // Convenience Methods //
 
-  /** Convenience method to check whether a given cell is protected */
+  /** Convenience method to check whether a given cell is protected. */
   private boolean isCellProtected(int row, int col) {
     Tuple2<Integer, Integer> targetCell = new Tuple2<>(row, col);
     return protectedCells.contains(targetCell);
