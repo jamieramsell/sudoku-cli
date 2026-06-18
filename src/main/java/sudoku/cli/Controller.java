@@ -146,9 +146,12 @@ public class Controller implements IController {
       }
     }
 
-    // Select one at random
+    // Select one of the replaceable cells at random. Because the grid is not solved, there is
+    // always at least one empty or incorrect cell, so this list is never empty here. Choosing only
+    // from this list guarantees a hint never lands on a cell the player has already filled in
+    // correctly.
     var random = new Random();
-    var randomCell = new Tuple2<>(random.nextInt(gridSize), random.nextInt(gridSize));
+    var randomCell = replaceableCells.get(random.nextInt(replaceableCells.size()));
 
     // Add the cell to protectedCells and replace its value in the grid with the solved value
     protectedCells.add(randomCell);
