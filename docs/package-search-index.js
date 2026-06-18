@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"sudoku.cli"},{"l":"sudoku.cli.exceptions"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"sudoku"},{"l":"sudoku.cli"},{"l":"sudoku.cli.exceptions"},{"l":"sudoku.generation"},{"l":"sudoku.generation.symmetry"}];updateSearchResults();
